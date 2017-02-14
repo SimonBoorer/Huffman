@@ -107,9 +107,9 @@ void Huffman::WritePadding(ofbitstream& outfile, const int size, const unsigned 
 	{
 		encoded_size += frequencies[i] * code_map[i].size();
 	}
-	int total_size = tree_size + encoded_size + 3;
+	int total_size = tree_size + 3 + encoded_size;
 	
-	char padding = 8 - (total_size % 8);
+	char padding = ((total_size + 8 - 1) & -8) - total_size;
 	outfile.write_bits(padding, 3);
 
 	for (int i = 0; i < padding; i++)
