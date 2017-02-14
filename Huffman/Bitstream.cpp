@@ -202,3 +202,4 @@ void ofbitstream::close()
 		setstate(std::ios::failbit);
 	}
 }
+

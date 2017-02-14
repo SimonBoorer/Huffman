@@ -250,3 +250,4 @@ void Huffman::Decompress(const std::string& infilename, const std::string& outfi
 
 	delete tree;
 }
+
