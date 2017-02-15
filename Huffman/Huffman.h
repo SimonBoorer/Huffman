@@ -34,7 +34,7 @@ protected:
 		InternalNode()
 			: Node(0), left_(nullptr), right_(nullptr) { }
 
-		InternalNode::~InternalNode()
+		~InternalNode()
 		{
 			delete left_;
 			delete right_;

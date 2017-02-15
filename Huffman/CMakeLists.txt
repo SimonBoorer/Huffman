@@ -16,6 +16,9 @@ source_group("" FILES ${HUFFMAN_SOURCES})
 # Adds sources to the Solution Explorer
 add_executable (Huffman ${HUFFMAN_SOURCES})
 
+# Properties->Linker->Input->Additional Dependencies
+target_link_libraries (Huffman boost_program_options)
+
 # Creates a folder "executables" and adds target 
 # project (Huffman.vcproj) under it
 set_property(TARGET Huffman PROPERTY FOLDER "executables")
