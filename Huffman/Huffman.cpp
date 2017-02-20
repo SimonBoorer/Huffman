@@ -6,10 +6,11 @@
 
 void Huffman::CreateFrequencyTable(ifbitstream& infile, unsigned int frequencies[256])
 {
-	char c;
-	while (infile.get(c))
+	unsigned char c = infile.get();
+	while (infile.good())
 	{
 		frequencies[c]++;
+		c = infile.get();
 	}
 }
 

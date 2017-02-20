@@ -2,13 +2,13 @@
 
 bool ibitstream::read_bit()
 {
-	if (pos == 8)
+	if (pos_ == 8)
 	{
-		cur_byte = get();
-		pos = 0;
+		cur_byte_ = get();
+		pos_ = 0;
 	}
-	int result = ((cur_byte & (1 << pos)) != 0);
-	pos++;
+	int result = ((cur_byte_ & (1 << pos_)) != 0);
+	pos_++;
 	return result == 1;
 }
 
@@ -47,7 +47,7 @@ void ibitstream::rewind()
 
 int ibitstream::tellbitg()
 {
-	return pos;
+	return pos_;
 }
 
 bool ibitstream::is_open()
@@ -57,19 +57,19 @@ bool ibitstream::is_open()
 
 void obitstream::write_bit(bool bit)
 {
-	if (pos == 8)
+	if (pos_ == 8)
 	{
-		put(cur_byte);
-		cur_byte = 0;
-		pos = 0;
+		put(cur_byte_);
+		cur_byte_ = 0;
+		pos_ = 0;
 	}
 
 	if (bit)
 	{
-		cur_byte |= (1 << pos);
+		cur_byte_ |= (1 << pos_);
 	}
 
-	pos++;
+	pos_++;
 }
 
 void obitstream::write_bits(const std::vector<bool>& bits)
@@ -100,9 +100,9 @@ void obitstream::write_byte(char byte)
 
 void obitstream::flush_bits()
 {
-	if (pos > 0)
+	if (pos_ > 0)
 	{
-		put(cur_byte);
+		put(cur_byte_);
 	}
 }
 
@@ -113,24 +113,24 @@ bool obitstream::is_open()
 
 ifbitstream::ifbitstream()
 {
-	init(&fb);
+	init(&fb_);
 }
 
 ifbitstream::ifbitstream(const char* filename)
 {
-	init(&fb);
+	init(&fb_);
 	open(filename);
 }
 
 ifbitstream::ifbitstream(const std::string& filename)
 {
-	init(&fb);
+	init(&fb_);
 	open(filename);
 }
 
 void ifbitstream::open(const char* filename)
 {
-	if (!fb.open(filename, std::ios::in | std::ios::binary))
+	if (!fb_.open(filename, std::ios::in | std::ios::binary))
 	{
 		setstate(std::ios::failbit);
 	}
@@ -143,12 +143,12 @@ void ifbitstream::open(const std::string& filename)
 
 bool ifbitstream::is_open()
 {
-	return fb.is_open();
+	return fb_.is_open();
 }
 
 void ifbitstream::close()
 {
-	if (!fb.close())
+	if (!fb_.close())
 	{
 		setstate(std::ios::failbit);
 	}
@@ -156,7 +156,7 @@ void ifbitstream::close()
 
 ofbitstream::ofbitstream()
 {
-	init(&fb);
+	init(&fb_);
 }
 
 ofbitstream::~ofbitstream()
@@ -166,19 +166,19 @@ ofbitstream::~ofbitstream()
 
 ofbitstream::ofbitstream(const char* filename)
 {
-	init(&fb);
+	init(&fb_);
 	open(filename);
 }
 
 ofbitstream::ofbitstream(const std::string& filename)
 {
-	init(&fb);
+	init(&fb_);
 	open(filename);
 }
 
 void ofbitstream::open(const char* filename)
 {
-	if (!fb.open(filename, std::ios::out | std::ios::binary))
+	if (!fb_.open(filename, std::ios::out | std::ios::binary))
 	{
 		setstate(std::ios::failbit);
 	}
@@ -191,13 +191,13 @@ void ofbitstream::open(const std::string& filename)
 
 bool ofbitstream::is_open()
 {
-	return fb.is_open();
+	return fb_.is_open();
 }
 
 void ofbitstream::close()
 {
 	flush_bits();
-	if (!fb.close())
+	if (!fb_.close())
 	{
 		setstate(std::ios::failbit);
 	}

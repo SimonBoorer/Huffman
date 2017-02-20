@@ -9,7 +9,7 @@
 class ibitstream : public std::istream
 {
 public:
-	ibitstream() : std::istream(NULL), cur_byte(0), pos(8) {}
+	ibitstream() : std::istream(NULL), cur_byte_(0), pos_(8) {}
 
 	bool read_bit();
 	void read_bits(char& byte, int bits);
@@ -22,14 +22,14 @@ public:
 	virtual bool is_open();
 
 private:
-	unsigned char cur_byte;
-	int pos;
+	unsigned char cur_byte_;
+	int pos_;
 };
 
 class obitstream : public std::ostream
 {
 public:
-	obitstream() : std::ostream(NULL), cur_byte(0), pos(0) {}
+	obitstream() : std::ostream(NULL), cur_byte_(0), pos_(0) {}
 
 	void write_bit(bool bit);
 	void write_bits(const std::vector<bool>& bits);
@@ -41,8 +41,8 @@ public:
 	virtual bool is_open();
 
 private:
-	unsigned char cur_byte;
-	int pos;
+	unsigned char cur_byte_;
+	int pos_;
 };
 
 class ifbitstream : public ibitstream
@@ -61,7 +61,7 @@ public:
 	void close();
 
 private:
-	std::filebuf fb;
+	std::filebuf fb_;
 };
 
 class ofbitstream : public obitstream
@@ -81,7 +81,7 @@ public:
 	void close();
 
 private:
-	std::filebuf fb;
+	std::filebuf fb_;
 };
 
 #endif // BITSTREAM_H_
